@@ -259,7 +259,7 @@ span {
   }
   .card-front {
     position: absolute;
-    margin-top: 9.5rem;
+    margin-top: 9.8rem;
     margin-right: 7rem;
   }
   .CVC {
@@ -286,6 +286,12 @@ span {
     width: 21rem;
   }
   /* Form part */
+  .name input,
+  .card-num input,
+  .date input,
+  .cvc input {
+    padding: 1.5rem;
+  }
   .date-cvc {
     display: flex;
     flex-direction: column;
@@ -297,6 +303,7 @@ span {
     font-size: var(--font-large);
   }
   .btn {
+    height: 4rem;
     font-size: var(--font-large);
   }
 
