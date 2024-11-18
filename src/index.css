@@ -249,10 +249,18 @@ span {
 /* small mobile phones */
 @media (min-width: 320px) and (max-width: 374px) {
   /* Card part */
+  .card {
+    height: 18rem;
+  }
   .card-front img,
   .card-back img {
     height: 12rem;
     width: 24rem;
+  }
+  .card-front {
+    position: absolute;
+    margin-top: 9.5rem;
+    margin-right: 7rem;
   }
   .CVC {
     top: 5.1rem;
@@ -282,6 +290,16 @@ span {
     display: flex;
     flex-direction: column;
   }
+  label {
+    font-size: var(--font-small);
+  }
+  input::placeholder {
+    font-size: var(--font-large);
+  }
+  .btn {
+    font-size: var(--font-large);
+  }
+
   /* Completed state part */
   .completed-state h1 {
     font-size: 2.8rem;
