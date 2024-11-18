@@ -1,13 +1,460 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+:root {
+  --color-gradient: linear-gradient(
+    to right,
+    hsl(249, 99%, 64%),
+    hsl(278, 94%, 30%)
+  );
+  --color-red: hsl(0, 100%, 66%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-light-grayish-violet: hsl(270, 3%, 87%);
+  --color-dark-grayish-violet: hsl(279, 6%, 55%);
+  --color-very-dark-violet: hsl(278, 68%, 11%);
+  --font-body: 1.8rem;
+  --font-small: 1.2rem;
+  --font-medium: 1.4rem;
+  --font-large: 1.6rem;
+  --font-XLarge: 2.5rem;
+}
+@font-face {
+  font-family: "space grotesk";
+  src: url(../public/fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf)
+    format("truetype");
+  font-weight: 500;
+}
+body,
+input,
+.btn {
+  font-family: "space grotesk";
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  font-size: var(--font-body);
+}
+/* large mobile phones and tablets */
+/* Card part */
+
+.card {
+  height: 22rem;
+  min-width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url(../public/images/bg-main-mobile.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  z-index: 999;
+}
+.card-front img,
+.card-back img {
+  height: 15rem;
+  width: 28rem;
+}
+.card-back {
+  position: relative;
+  margin-left: 5rem;
+  margin-top: 3rem;
+}
+.CVC {
+  position: absolute;
+  top: 6.7rem;
+  right: 3rem;
+  color: var(--color-white);
+  font-size: var(--font-small);
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.card-front {
+  position: absolute;
+  margin-top: 11.5rem;
+  margin-right: 6rem;
+}
+.card-front img {
+  box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+}
+.circles {
+  position: absolute;
+  width: 12rem;
+  height: 4rem;
+  bottom: 10rem;
+  left: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+.circles .white-circle {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+.circles .transparent-circle {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0.1rem solid var(--color-white);
+  border-radius: 50%;
+  top: 0.8rem;
+  left: 4rem;
+}
+.card-details {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: var(--color-white);
+}
+
+.card-number p {
+  margin-right: 0.8rem;
+  letter-spacing: 0.2rem;
+}
+
+.row {
+  width: 25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: var(--font-small);
+  margin-top: 1.5rem;
+}
+.row .card-expiry {
+  margin-right: 1rem;
+}
+
+/* Form part */
+.form-info {
+  margin-top: 10rem;
+  margin-left: 2rem;
+  padding-right: 2rem;
+}
+.name,
+.card-num {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+.name input,
+.card-num input,
+.date input,
+.cvc input {
+  height: 4rem;
+  border: 0.2rem solid var(--color-light-grayish-violet);
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+  padding: 2.5rem;
+  color: var(--color-very-dark-violet);
+  font-size: var(--font-large);
+}
+input::placeholder {
+  color: var(--color-light-grayish-violet);
+  font-size: var(--font-body);
+}
+input:focus {
+  border-color: var(--color-dark-grayish-violet);
+  outline: none;
+}
+input.error:focus {
+  border-color: var(--color-red);
+  outline: none;
+}
+label {
+  color: var(--color-very-dark-violet);
+  margin-bottom: 0.5rem;
+  font-size: var(--font-medium);
+  letter-spacing: 0.2rem;
+}
+
+.date-cvc {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.date,
+.cvc {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.date input,
+.cvc input {
+  width: 100%;
+}
+span {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.wrapper input {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  height: 6rem;
+  background-color: var(--color-very-dark-violet);
+  color: var(--color-white);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: var(--font-body);
+  margin-top: 4rem;
+}
+.error-message {
+  color: var(--color-red);
+  font-size: var(--font-small);
+}
+
+/* completed state part */
+.completed-state {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 8rem;
+  padding: 2rem;
+}
+.icon-complete {
+  margin-bottom: 4rem;
+}
+.completed-state h1 {
+  font-weight: normal;
+  color: var(--color-very-dark-violet);
+  margin-bottom: 2rem;
+  letter-spacing: 0.5rem;
+}
+.completed-state p {
+  color: var(--color-dark-grayish-violet);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* small mobile phones */
+@media (min-width: 320px) and (max-width: 374px) {
+  /* Card part */
+  .card-front img,
+  .card-back img {
+    height: 12rem;
+    width: 24rem;
+  }
+  .CVC {
+    top: 5.1rem;
+    right: 3rem;
+  }
+  .circles {
+    width: 10rem;
+    bottom: 7rem;
+  }
+  .circles .white-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .circles .transparent-circle {
+    width: 1rem;
+    height: 1rem;
+  }
+  .card-number p {
+    font-size: var(--font-large);
+    letter-spacing: 0.1rem;
+  }
+  .row {
+    width: 21rem;
+  }
+  /* Form part */
+  .date-cvc {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Completed state part */
+  .completed-state h1 {
+    font-size: 2.8rem;
+  }
+  .completed-state p {
+    font-size: var(--font-body);
+  }
+}
+
+/* Laptops and Desktops */
+
+@media (min-width: 769px) {
+  .container {
+    position: fixed;
+    width: 100%;
+    min-height: 100%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  /* Card part */
+  .card {
+    background-image: url(../public/images/bg-main-desktop.png);
+    background-size: cover;
+    background-position: top center;
+    height: 100vh;
+    min-width: 42rem;
+    position: relative;
+    align-self: flex-start;
+    justify-content: center;
+  }
+  .card-front img,
+  .card-back img {
+    height: 22rem;
+    width: 40rem;
+  }
+  .card-back {
+    position: absolute;
+    top: 50%;
+    left: 18rem;
+  }
+  .card-back img {
+    box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+  }
+  .CVC {
+    position: absolute;
+    top: 10rem;
+    right: 4.5rem;
+    font-size: var(--font-medium);
+    letter-spacing: 0.2rem;
+  }
+  .card-front {
+    position: absolute;
+    top: 6%;
+    left: 14rem;
+  }
+  .circles {
+    position: absolute;
+    width: 14;
+    height: 6rem;
+    bottom: 14rem;
+    left: 2.5rem;
+    display: flex;
+    flex-direction: row;
+  }
+  .circles .white-circle {
+    position: absolute;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .circles .transparent-circle {
+    position: absolute;
+    width: 1.7rem;
+    height: 1.7rem;
+    top: 1rem;
+    left: 5rem;
+  }
+  .card-details {
+    position: absolute;
+    bottom: 3rem;
+    left: 2.5rem;
+  }
+
+  .card-number {
+    font-size: var(--font-XLarge);
+    letter-spacing: 0.3rem;
+  }
+  .card-number p {
+    letter-spacing: 0.3rem;
+  }
+
+  .row {
+    width: 35rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: var(--font-medium);
+    margin-top: 2rem;
+    letter-spacing: 0.2rem;
+  }
+  .row .card-expiry {
+    margin-right: 0.5rem;
+  }
+  /* Form part */
+  .form-info {
+    width: 50rem;
+    height: 40rem;
+    margin-left: 40rem;
+    padding-right: 2rem;
+  }
+  .name,
+  .card-num {
+    width: 40rem;
+  }
+  .name input,
+  .card-num input,
+  .date input,
+  .cvc input {
+    height: 2rem;
+    margin-bottom: 0.5rem;
+    padding: 2rem 1.5rem;
+  }
+  input::placeholder {
+    color: var(--color-light-grayish-violet);
+    font-size: var(--font-large);
+  }
+  label {
+    font-size: var(--font-small);
+  }
+  .date-cvc {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .date,
+  .cvc {
+    flex: none;
+  }
+  .date input {
+    width: 8rem;
+  }
+  .cvc input {
+    width: 21rem;
+  }
+  span {
+    gap: 1rem;
+  }
+  .btn {
+    width: 40rem;
+    height: 5rem;
+    font-size: var(--font-large);
+    margin-top: 3rem;
+  }
+  /* Completed state part */
+  .completed-state {
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    align-items: center;
+    margin-top: 5rem;
+    margin-left: 40rem;
+    padding: 2rem;
+  }
+  .icon-complete {
+    margin-bottom: 3rem;
+  }
+  .completed-state h1 {
+    font-size: var(--font-XLarge);
+  }
+  .completed-state p {
+    font-size: var(--font-body);
+    margin-bottom: 1.5rem;
+  }
 }
