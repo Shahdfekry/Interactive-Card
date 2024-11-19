@@ -6,6 +6,7 @@ function App() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [cvc, setCVC] = useState("");
+  const [inputValue, setInputValue] = useState("");
   // errors
   const [blankErrors, setBlankErrors] = useState({
     name: "",
@@ -20,6 +21,8 @@ function App() {
     year: "",
     cvc: "",
   });
+  const [nameError, setNameError] = useState("");
+  const [yearError, setYearError] = useState("");
   const [showForm, setShowForm] = useState(true);
 
   /* handlers */
@@ -34,6 +37,33 @@ function App() {
       ...prevErrors,
       [field]: /[^0-9\s]/.test(value) ? "Wrong format, numbers only" : "",
     }));
+  };
+  const handleNameChange = (e) => {
+    const originalValue = e.target.value;
+    if (/[^a-zA-Z\s]/.test(originalValue)) {
+      setNameError("wrong format, a-z characters only");
+    } else {
+      setNameError("");
+    }
+    setInputValue(originalValue);
+    setName(originalValue.toUpperCase());
+    handleBlankError("name", originalValue);
+  };
+  const formatCardNumber = (value) => {
+    const cleanedValue = value.replace(/\s+/g, "");
+    return cleanedValue.replace(/(.{4})/g, "$1 ").trim();
+  };
+  const handleYearError = (value) => {
+    const currentYear = new Date().getFullYear();
+    const formattedCurrentYear = currentYear % 100;
+    if (!value) {
+      setYearError("");
+    } else if (Number(value) < formattedCurrentYear) {
+      setYearError("invalid year");
+    } else {
+      setYearError("");
+    }
+    setYear(value);
   };
   function handleSubmit(e) {
     e.preventDefault();
@@ -60,10 +90,6 @@ function App() {
     setYear("");
     setCVC("");
   }
-  const formatCardNumber = (value) => {
-    const cleanedValue = value.replace(/\s+/g, "");
-    return cleanedValue.replace(/(.{4})/g, "$1 ").trim();
-  };
 
   return (
     <div className="container">
@@ -76,11 +102,6 @@ function App() {
       />
       {showForm ? (
         <Form
-          name={name}
-          setName={(value) => {
-            setName(value);
-            handleBlankError("name", value);
-          }}
           cardNumber={cardNumber}
           setCardNumber={(value) => {
             const formattedValue = formatCardNumber(value);
@@ -96,7 +117,7 @@ function App() {
           }}
           year={year}
           setYear={(value) => {
-            setYear(value);
+            handleYearError(value);
             handleBlankError("year", value);
             handleNumberError("year", value);
           }}
@@ -108,7 +129,11 @@ function App() {
           }}
           blankErrors={blankErrors}
           numberErrors={numberErrors}
+          inputValue={inputValue}
+          nameError={nameError}
+          yearError={yearError}
           handleSubmit={handleSubmit}
+          handleNameChange={handleNameChange}
         />
       ) : (
         <CompletedState handleReset={handleReset} />
@@ -148,8 +173,6 @@ function Card({ name, cardNumber, month, year, cvc }) {
   );
 }
 function Form({
-  name,
-  setName,
   cardNumber,
   setCardNumber,
   month,
@@ -161,6 +184,10 @@ function Form({
   blankErrors,
   numberErrors,
   handleSubmit,
+  inputValue,
+  nameError,
+  handleNameChange,
+  yearError,
 }) {
   return (
     <form onSubmit={handleSubmit}>
@@ -168,15 +195,16 @@ function Form({
         <div className="name">
           <label>CARDHOLDER NAME</label>
           <input
-            className={blankErrors.name ? "error" : ""}
+            className={blankErrors.name || nameError ? "error" : ""}
             type="text"
             placeholder="e.g. Jane Appleseed"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={inputValue}
+            onChange={handleNameChange}
           />
           {blankErrors.name && (
             <span className="error-message">{blankErrors.name}</span>
           )}
+          {nameError && <span className="error-message">{nameError}</span>}
         </div>
         <div className="card-num">
           <label>CARD NUMBER</label>
@@ -187,7 +215,11 @@ function Form({
             type="text"
             placeholder="e.g. 1234 5678 9123 0000"
             value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setCardNumber(value.length <= 19 ? value : cardNumber);
+              console.log(value.length);
+            }}
           />
           {blankErrors.cardNumber && (
             <span className="error-message">{blankErrors.cardNumber}</span>
@@ -220,7 +252,9 @@ function Form({
               <div className="wrapper">
                 <input
                   className={
-                    blankErrors.year || numberErrors.year ? "error" : ""
+                    blankErrors.year || numberErrors.year || yearError
+                      ? "error"
+                      : ""
                   }
                   type="text"
                   placeholder="YY"
@@ -232,6 +266,9 @@ function Form({
                 )}
                 {numberErrors.year && (
                   <span className="error-message">{numberErrors.year}</span>
+                )}
+                {yearError && (
+                  <span className="error-message">{yearError}</span>
                 )}
               </div>
             </span>
