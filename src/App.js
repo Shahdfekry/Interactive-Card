@@ -76,6 +76,16 @@ function App() {
         hasError = true;
       }
     });
+    if (
+      numberErrors.cardNumber ||
+      numberErrors.month ||
+      numberErrors.year ||
+      numberErrors.cvc ||
+      nameError ||
+      yearError
+    ) {
+      hasError = true;
+    }
     if (hasError) {
       return;
     }
@@ -89,6 +99,7 @@ function App() {
     setMonth("");
     setYear("");
     setCVC("");
+    setInputValue("");
   }
 
   return (
